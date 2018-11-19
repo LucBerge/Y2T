@@ -14,8 +14,8 @@ class Torrent:
 	def create(self, album):
 		if(os.path.exists(album + ".torrent")):
 			os.remove(album + ".torrent")
-		os.popen("ctorrent -t -u \"" + self.tracker + "\" -s \"" + album + ".torrent\" \"" + album + "\"")
-		#os.popen("ctorrent \"" + album + ".torrent\"")
 		log.log("Création du fichier \"" + album + ".torrent\"")
+		os.popen("transmission-create -p -t \"" + self.tracker + "\" -o \"" + album + ".torrent\" \"" + album + "\"")
+		os.popen("transmission-gtk \"" + album + ".torrent\" &")
 			
 		
