@@ -7,18 +7,9 @@
 
 from __future__ import unicode_literals
 from bs4 import BeautifulSoup
-import eyed3, os, sys, youtube_dl, glob, requests, fnmatch, inspect
-
-################
-# ENUMERATIONS #
-################
-
-class bcolors:
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    CR = '\033[F'
+import os, sys, youtube_dl, glob, requests, fnmatch, inspect
+from mutagen.id3 import ID3, COMM, TALB, TCON, TDRC, TIT2, TPE1, TRCK, APIC
+import Y2T_Log as log
 
 #############
 # PREREQUIS #
@@ -26,7 +17,6 @@ class bcolors:
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
-ydl = youtube_dl.YoutubeDL({'outtmpl': '%(id)s%(ext)s'})
 
 ##############
 # CONSTANTES #
@@ -57,16 +47,17 @@ class Playlist:
 			if (playlist_url not in open(downloaded_file).read()):
 				self.urls_a_telecharger.append("https://www.youtube.com/watch?v=" + playlist_url)
 		
-		log(str(len(self.urls)) + " vidéos détectées")
+		log.log(str(len(self.urls)) + " vidéos détectées")
 
 		if(len(self.urls) != len(self.urls_a_telecharger)):
-			attention(str(len(self.urls)-len(self.urls_a_telecharger)) + " vidéos déjà téléchargées")
+			log.attention(str(len(self.urls)-len(self.urls_a_telecharger)) + " vidéos déjà téléchargées")
 		
-		log("Analyse de " + str(len(self.urls_a_telecharger)) + " vidéos en cours...veuillez patienter...\n")
+		if(len(self.urls_a_telecharger) > 0):
+			log.log("Analyse de " + str(len(self.urls_a_telecharger)) + " vidéos en cours...veuillez patienter...\n")
 
-		for i in range(len(self.urls_a_telecharger)):
-			self.videos.append(Video(self.urls_a_telecharger[i], self.artist))
-			log(str(i+1) + "/" + str(len(self.urls_a_telecharger)),True)
+			for i in range(len(self.urls_a_telecharger)):
+				self.videos.append(Video(self.urls_a_telecharger[i], self.artist))
+				log.log(str(i+1) + "/" + str(len(self.urls_a_telecharger)),True)
 
 	def get_playlist_links(self, playlist_url):
 		ids = []
@@ -87,15 +78,15 @@ class Playlist:
 		videos_a_telecharger = self.filtrer(annee, mois, duree_max)
 
 		if(len(videos_a_telecharger)!=0):
-			log(str(album) + " : Téléchargement de " + str(len(videos_a_telecharger)) + " videos en cours...veuillez patienter...")
+			log.log(str(album) + " : Téléchargement de " + str(len(videos_a_telecharger)) + " videos en cours...veuillez patienter...")
 		else:
-			log(str(album) + " : Aucune video à télécharger")
+			log.log(str(album) + " : Aucune video à télécharger")
 		
 
 		compteur = 0
 		for video in videos_a_telecharger :
 			compteur+=1
-			log(str(compteur) + "/" + str(len(videos_a_telecharger)) + " : " + str(video.numero) + " " + str(video.titre))
+			log.log(str(compteur) + "/" + str(len(videos_a_telecharger)) + " : " + str(video.numero) + " " + str(video.titre))
 			video.telecharger(album, couverture)
 
 	def filtrer(self, annee, mois, duree_max):
@@ -121,6 +112,7 @@ class Video:
 	mois = 0
 	duree = 0
 	numero = 0
+	commentaire = "Créé avec Y2T"
 
 	def __init__(self, url, artist):
 
@@ -155,16 +147,22 @@ class Video:
 			
 		if "100%" in Telechargment:
 
-			musique = eyed3.load(max(glob.glob("*"), key=os.path.getctime))
-			musique.tag.artist = unicode(self.artist.encode('iso8859_1'),'iso8859_1')
-			musique.tag.album = unicode(album)
-			musique.tag.title = unicode(self.titre)
-			musique.tag.track_num = len(fnmatch.filter(os.listdir('.'), '*.mp3'))
+			musique = ID3(max(glob.glob("*"), key=os.path.getctime))
+
+			musique.add(TPE1(encoding=3, text=unicode(self.artist)))
+			musique.add(TALB(encoding=3, text=unicode(album)))
+			musique.add(TIT2(encoding=3, text=unicode(self.titre)))
+			musique.add(TRCK(encoding=3, text=unicode(len(fnmatch.filter(os.listdir('.'), '*.mp3')))))
+
+			if(self.annee != 0):
+				musique.add(TDRC(encoding=3, text=unicode(self.annee)))
+
+			musique.add(COMM(encoding=3, text=unicode(self.commentaire)))
 
 			image = open("../"+couverture,"rb").read()
-			musique.tag.images.set(3,image,"image/png")
+			musique.add(APIC(3, 'image/png', 3, 'Front cover', image))
 				
-			musique.tag.save()
+			musique.save(v2_version=3)
 			os.chdir("..")
 
 			file = open(downloaded_file,"a")
@@ -173,20 +171,4 @@ class Video:
 
 		else:
 			os.chdir("..")
-			erreur("Impossible de télécharger " + self.url)
-
-#############
-# AFFICHAGE #
-#############
-
-def log(texte, CR=False):
-	if(CR==True):
-		print(bcolors.CR + bcolors.OKGREEN + "LOG : " + bcolors.ENDC + texte)
-	else:
-		print(bcolors.OKGREEN + "LOG : " + bcolors.ENDC + texte)
-
-def attention(texte):
-	print(bcolors.WARNING + "ATTENTION : " + bcolors.ENDC + texte)
-
-def erreur(texte):
-	print(bcolors.FAIL + "ERREUR : " + bcolors.ENDC + texte)
+			log.erreur("Impossible de télécharger " + self.url)
