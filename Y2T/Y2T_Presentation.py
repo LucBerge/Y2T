@@ -2,6 +2,7 @@
 # coding: utf8
 
 import os, subprocess
+import Y2T_Log as log
 
 class Presentation:
 
@@ -33,7 +34,7 @@ class Presentation:
 		self.artiste = artiste
 		self.format = format
 
-	def save(self, album):
+	def create(self, album):
 
 		self.album = album
 		self.nb_fichiers = len(os.listdir(album))
@@ -64,3 +65,4 @@ class Presentation:
 		"[img]" + str(self.url_signature) + "[/img][/center]")
 
 		os.popen("echo \"" + texte + "\" > \"" + album + ".txt\"")
+		log.log("Création du fichier \"" + album + ".txt\"")
