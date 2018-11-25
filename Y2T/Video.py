@@ -5,8 +5,9 @@
 ###########
 
 from __future__ import unicode_literals
+from Log import *
 from bs4 import BeautifulSoup
-import log, os, sys, glob, requests, fnmatch
+import os, sys, glob, requests, fnmatch
 from mutagen.id3 import ID3, COMM, TALB, TCON, TDRC, TIT2, TPE1, TRCK, APIC
 
 #############
@@ -55,9 +56,11 @@ class Video:
 	##############
 
 	def isDownoaded(self):
-		file = open(downloaded_file,"r+")
-		out = self.url in file.read()
-		file.close()
+		out = False
+		if(os.path.exists(downloaded_file)):
+			file = open(downloaded_file,"r+")
+			out = (self.url in file.read())
+			file.close()
 		return out
 
 	def setDownoaded(self):

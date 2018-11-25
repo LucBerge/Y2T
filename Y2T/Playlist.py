@@ -4,7 +4,9 @@
 # IMPORTS #
 ###########
 
-import Video, log, os, sys
+from Video import *
+from Log import *
+import os, sys
 
 #############
 # PREREQUIS #
@@ -40,19 +42,19 @@ class Playlist:
 		self.format = format
 		self.urls = self.getUrls(self.url)
 
-		log.log(str(len(self.urls)) + " vidéos détectées")
+		log(str(len(self.urls)) + " vidéos détectées")
 
 		for url in self.urls:
 			self.videos.append(Video(url, self.artist))
 		
-		getInformations()
+		self.getInformations()
 
 	def getUrls(self, url):
 		urls = []
 		RSS_videos=os.popen("youtube-dl -j --flat-playlist \"" + url + "\" | jq -r '.id'").read()
 		urls = RSS_videos.split("\n")
-		urls.pop(len(ids)-1)
-		return ids
+		urls.pop(len(urls)-1)
+		return urls
 
 	###########
 	# METHODS #
@@ -60,26 +62,26 @@ class Playlist:
 
 	def getInformations(self):
 
-		log.log("Analyse de " + str(len(self.videos)) + " vidéos en cours...veuillez patienter...\n")
+		log("Analyse de " + str(len(self.videos)) + " vidéos en cours...veuillez patienter...\n")
 
 		for videos in self.videos:
 			video.getInformations()
-			log.log(str(videos.index(video)+1) + "/" + str(len(self.videos)),True)
+			log(str(videos.index(video)+1) + "/" + str(len(self.videos)),True)
 
 	def download(self, album, cover, year=None, month=None, maximumDuration=600):
 		filteredVideos = self.filter(year, month, maximumDuration)
 
 		if(len(filteredVideos)!=0):
-			log.log(str(album) + " : Téléchargement de " + str(len(filteredVideos)) + " videos en cours...veuillez patienter...")
+			log(str(album) + " : Téléchargement de " + str(len(filteredVideos)) + " videos en cours...veuillez patienter...")
 		
 			compteur = 0
 			for video in filteredVideos :
 				compteur+=1
-				log.log(str(compteur) + "/" + str(len(filteredVideos)) + " : " + str(video.numero) + " " + str(video.titre))
+				log(str(compteur) + "/" + str(len(filteredVideos)) + " : " + str(video.numero) + " " + str(video.titre))
 				video.download(album, cover)
 
 		else:
-			log.log(str(album) + " : Aucune video à télécharger")
+			log(str(album) + " : Aucune video à télécharger")
 
 	def filter(self, year, month, maximumDuration):
 		filteredVideos = []
