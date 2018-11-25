@@ -1,8 +1,7 @@
 #!/usr/bin/python
 # coding: utf8
 
-import Y2T_Download, Y2T_Presentation, Y2T_Nfo, Y2T_Torrent, os
-import Y2T_Log as log
+import Playlist, Presentation, Nfo, Torrent, Log, os
 
 nfo_package = "mediainfo"
 torrent_package = "transmission-cli"
@@ -14,16 +13,16 @@ class Upload:
 	nfo = None
 	torrent = None
 
-	def __init__(self, artist, url_couverture, description, url_video, description_video, format, playlist_url, tracker):
-		self.playlist = Y2T_Download.Playlist(playlist_url, artist)
-		self.presentation = Y2T_Presentation.Presentation(artist, url_couverture, description, url_video, description_video, artist, format)
-		self.nfo = Y2T_Nfo.Nfo()
-		self.torrent = Y2T_Torrent.Torrent(tracker)
+	def __init__(self, playlist_url, artist, url_couverture, description, url_video, description_video, format, tracker):
+		self.playlist = Playlist(playlist_url, artist, format)
+		self.presentation = Presentation(artist, url_couverture, description, url_video, description_video, artist, format)
+		self.nfo = Nfo()
+		self.torrent = Torrent(tracker)
 
-	def upload(self, album, cover, annee=None, mois=None, duree_max=600):
+	def upload(self, album, cover, year=None, month=None, maximumDuration=600):
 
 		#Téléchargement
-		self.playlist.telecharger(album, cover, annee, mois, duree_max)
+		self.playlist.telecharger(album, cover, year, month, maximumDuration)
 
 		#Création de la presentation	
 		self.presentation.create(album)

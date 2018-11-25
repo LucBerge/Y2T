@@ -43,9 +43,9 @@ class Playlist:
 		if(not os.path.exists(downloaded_file)):
 			os.mknod(downloaded_file)
 
-		for playlist_url in self.urls:
-			if (playlist_url not in open(downloaded_file).read()):
-				self.urls_a_telecharger.append("https://www.youtube.com/watch?v=" + playlist_url)
+		for url in self.urls:
+			if (url not in open(downloaded_file).read()):
+				self.urls_a_telecharger.append("https://www.youtube.com/watch?v=" + url)
 		
 		log.log(str(len(self.urls)) + " vidéos détectées")
 
@@ -82,7 +82,6 @@ class Playlist:
 		else:
 			log.log(str(album) + " : Aucune video à télécharger")
 		
-
 		compteur = 0
 		for video in videos_a_telecharger :
 			compteur+=1

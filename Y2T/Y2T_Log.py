@@ -22,8 +22,8 @@ def log(texte, CR=False):
 	else:
 		print(bcolors.OKGREEN + "LOG : " + bcolors.ENDC + texte)
 
-def attention(texte):
+def warning(texte):
 	print(bcolors.WARNING + "ATTENTION : " + bcolors.ENDC + texte)
 
-def erreur(texte):
+def error(texte):
 	print(bcolors.FAIL + "ERREUR : " + bcolors.ENDC + texte)
