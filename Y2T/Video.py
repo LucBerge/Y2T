@@ -55,7 +55,7 @@ class Video:
 	# DOWNLOADED #
 	##############
 
-	def isDownoaded(self):
+	def isDownloaded(self):
 		out = False
 		if(os.path.exists(downloaded_file)):
 			file = open(downloaded_file,"r+")
@@ -74,7 +74,7 @@ class Video:
 
 	def getInformations(self):
 
-		if(not isDownloaded()):
+		if(not self.isDownloaded()):
 			req = requests.get(self.url)
 			soup = BeautifulSoup(req.text, "html.parser")
 
@@ -93,45 +93,42 @@ class Video:
 						M=duration_str.index('M')
 						self.duration = int(duration_str[T+1:M])*60 + int(duration_str[M+1:-1])
 
-	def telecharger(self, album, cover):
+	def download(self, album, cover):
 		
 		self.album = album
 		self.cover = cover
 
-		if(not isDownloaded()):
+		if(not self.isDownloaded()):
 			if(not os.path.isdir(self.album)):
 				os.mkdir(self.album, 0755)
 
 			os.chdir(self.album)
 			Telechargment=os.popen("youtube-dl -x --audio-format mp3 --audio-quality 192 -o \"" + self.album + "\%(title)s.%(ext)s\" " + self.url).read()
-				
+			os.chdir("..")
+
 			if "100%" in Telechargment:
-				setTags()
-				os.chdir("..")
-				setDownoaded()
+				self.setTags()
+				self.setDownoaded()
 
 			else:
-				os.chdir("..")
 				erreur("Impossible de télécharger " + self.url)
-		else:
-			warning(self.title + " déjà téléchargé")
 
 	def setTags(self):
-		musique = ID3(max(glob.glob("\"" + self.album + "/*\""), key=os.path.getctime))
+		musique = ID3(max(glob.glob(self.album + "/*"), key=os.path.getctime))
 
 		musique.add(TPE1(encoding=3, text=unicode(self.artist)))
 		musique.add(TALB(encoding=3, text=unicode(self.album)))
 		musique.add(TIT2(encoding=3, text=unicode(self.title)))
 
-		self.trackNumber = len(fnmatch.filter(os.listdir("\"" + self.album + "/\""), '*.mp3'))
+		self.trackNumber = len(fnmatch.filter(os.listdir(self.album), '*.mp3'))
 		musique.add(TRCK(encoding=3, text=unicode(self.trackNumber)))
 
 		if(self.year != None):
 			musique.add(TDRC(encoding=3, text=unicode(self.year)))
 
-		musique.add(COMM(encoding=3, text=unicode(self.commentaire)))
+		musique.add(COMM(encoding=3, text=unicode(self.comment)))
 
-		image = open("../"+self.cover,"rb").read()
+		image = open(self.cover,"rb").read()
 		musique.add(APIC(3, 'image/png', 3, 'Front cover', image))
 				
 		musique.save(v2_version=3)

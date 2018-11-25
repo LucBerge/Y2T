@@ -26,6 +26,17 @@ downloaded_file = "downloaded.txt"
 ###########
 
 class Playlist:
+
+	#############
+	# CONSTANTS #
+	#############
+
+	youtubeUrl = "https://www.youtube.com/watch?v="
+
+	############
+	# ATRIBUTS #
+	############
+
 	url = None
 	artist =  None
 	format =  None
@@ -54,7 +65,7 @@ class Playlist:
 		RSS_videos=os.popen("youtube-dl -j --flat-playlist \"" + url + "\" | jq -r '.id'").read()
 		urls = RSS_videos.split("\n")
 		urls.pop(len(urls)-1)
-		return urls
+		return [self.youtubeUrl + url for url in urls]
 
 	###########
 	# METHODS #
@@ -64,9 +75,9 @@ class Playlist:
 
 		log("Analyse de " + str(len(self.videos)) + " vidéos en cours...veuillez patienter...\n")
 
-		for videos in self.videos:
+		for video in self.videos:
 			video.getInformations()
-			log(str(videos.index(video)+1) + "/" + str(len(self.videos)),True)
+			log(str(self.videos.index(video)+1) + "/" + str(len(self.videos)),True)
 
 	def download(self, album, cover, year=None, month=None, maximumDuration=600):
 		filteredVideos = self.filter(year, month, maximumDuration)
@@ -74,10 +85,8 @@ class Playlist:
 		if(len(filteredVideos)!=0):
 			log(str(album) + " : Téléchargement de " + str(len(filteredVideos)) + " videos en cours...veuillez patienter...")
 		
-			compteur = 0
 			for video in filteredVideos :
-				compteur+=1
-				log(str(compteur) + "/" + str(len(filteredVideos)) + " : " + str(video.numero) + " " + str(video.titre))
+				log(str(filteredVideos.index(video)+1) + "/" + str(len(filteredVideos)) + " : " + str(video.url))
 				video.download(album, cover)
 
 		else:
