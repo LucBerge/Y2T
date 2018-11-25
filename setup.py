@@ -8,5 +8,6 @@ setup(name='Y2T',
       author='Esisar Pro-G',
       author_email='esisar.pro.g@gmail.com',
       url='https://github.com/Esisar-Pro-G/Y2T',
-      packages=['beautifulsoup4 ', 'youtube-dl', 'mutagen'],
+      packages=['Y2T'],
+      install_requires=['beautifulsoup4 ', 'youtube-dl', 'mutagen'],
      )
