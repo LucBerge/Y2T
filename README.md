@@ -6,7 +6,7 @@ Youtube to Torrent est un outil python fonctionnant sous Linux permettant de cr�
 L'objectif est de simplifier la création des fichiers nécessaires au partage de contenu musical.
 
 Y2T permet de :
-- Analyser, filtrer et télécharger les vidéos d'une playlist
+- Analyser, filtrer et télécharger les vidéos d'une playlist au format mp3
 - Ajouter les tags mp3
 - Créer la présentation du torrent
 - Créer le fichier .nfo
@@ -15,14 +15,11 @@ Y2T permet de :
 ## Prérequis
 
 Installation de pip :
-
 ```
 $ sudo apt-get install python-pip
-
 ```
 
 Y2T à besoin des paquets suivant :
-
 ```
 $ sudo pip install beautifulsoup4 youtube-dl mutagen
 ```
@@ -49,6 +46,8 @@ $ sudo pip install git+https://github.com/Esisar-Pro-G/Y2T.git@master
 
 ## Utilisation
 
+Le code ci-dessous permet de générer facilement tous les fichier nécessaire à l'uploader la discographie de la chaine Ediv Music.
+Chaque album représente une année.
 ```
 import Y2T
 Discographie = Y2T.Upload("https://www.youtube.com/channel/UCBVwKRYmERFiIbheXEATDqw/videos",
@@ -67,4 +66,4 @@ Discographie = Y2T.Upload("https://www.youtube.com/channel/UCBVwKRYmERFiIbheXEAT
 
 ## Contribution
 
-Pour contribuer au projet, vous devez réaliser un fork du projet vers votre espace personnel. Vous pourrez alors faire un pull request en temps voulu. Merci de contacter @LucBerge pour plus d'information sur les tâches à réaliser.
+Pour contribuer au projet, vous devez réaliser un fork du projet vers votre espace personnel. Vous pourrez alors faire un pull request en temps voulu. Merci de contacter @LucBerge pour plus d'informations sur les tâches à réaliser.
