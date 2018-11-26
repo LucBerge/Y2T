@@ -103,7 +103,7 @@ class Video:
 				os.mkdir(self.album, 0755)
 
 			os.chdir(self.album)
-			Telechargment=os.popen("youtube-dl -x --audio-format mp3 --audio-quality 192 -o \"" + self.album + "\%(title)s.%(ext)s\" " + self.url).read()
+			Telechargment=os.popen("youtube-dl -x --audio-format mp3 --audio-quality 192 -o \"%(title)s.%(ext)s\" " + self.url).read()
 			os.chdir("..")
 
 			if "100%" in Telechargment:
