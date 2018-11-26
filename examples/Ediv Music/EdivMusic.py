@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # coding: utf8
 
+import sys
+sys.path.insert(0, '/media/lucas/DATA/Lucas/Projets personnels/Y2T')
 import Y2T
 
 ########
@@ -8,13 +10,13 @@ import Y2T
 ########
 
 def main():
-	Discographie = Y2T.Upload("Ediv Music",
+	Discographie = Y2T.Upload("https://www.youtube.com/channel/UCBVwKRYmERFiIbheXEATDqw/videos",
+		"Ediv Music",
 		"https://www.pixenli.com/image/dE2gZ6EV",
 		"Ediv Music try to bring you the best music out there, so they don’t have to search SoundCloud, YouTube and Spotify channels 24/7. We seperate the men from the boys and the rubbish from the diamonds. ",
 		"https://www.youtube.com/watch?v=bNppHOYIgRE",
 		"Every day should feel like valentinesday right? That's why this channel brings you all the new Tropical, Summer and Deep House every day.",
 		"mp3",
-		"https://www.youtube.com/channel/UCBVwKRYmERFiIbheXEATDqw/videos",
 		"___TRACKER___")
 	
 	Discographie.upload("Collection 2015", "Collection 2015.jpg",2015)
