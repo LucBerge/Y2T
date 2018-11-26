@@ -1,41 +1,69 @@
-#!/usr/bin/python
 # coding: utf8
 
-import Y2T_Download, Y2T_Presentation, Y2T_Nfo, Y2T_Torrent, os
-import Y2T_Log as log
+###########
+# IMPORTS #
+###########
 
-nfo_package = "mediainfo"
-torrent_package = "transmission-cli"
+import os
+from Playlist import *
+from Presentation import *
+from Nfo import *
+from Torrent import *
+from Log import *
+
+
+#############
+# CONSTANTS #
+#############
+
+nfoPackage = "mediainfo"
+torrentPackage = "transmission-cli"
+
+#########
+# CLASS #
+#########
 
 class Upload:
+
+	############
+	# ATRIBUTS #
+	############
 
 	playlist = None
 	presentation = None
 	nfo = None
 	torrent = None
 
-	def __init__(self, artist, url_couverture, description, url_video, description_video, format, playlist_url, tracker):
-		self.playlist = Y2T_Download.Playlist(playlist_url, artist)
-		self.presentation = Y2T_Presentation.Presentation(artist, url_couverture, description, url_video, description_video, artist, format)
-		self.nfo = Y2T_Nfo.Nfo()
-		self.torrent = Y2T_Torrent.Torrent(tracker)
+	###############
+	# CONSTRUCTOR #
+	###############
 
-	def upload(self, album, cover, annee=None, mois=None, duree_max=600):
+	def __init__(self, playlistUrl, artist, coverUrl, description, videoUrl, videoDescription, format, tracker):
+		self.playlist = Playlist(playlistUrl, artist, format)
+		self.presentation = Presentation(artist, coverUrl, description, videoUrl, videoDescription, artist, format)
+		self.nfo = Nfo()
+		self.torrent = Torrent(tracker)
+
+	###########
+	# METHODS #
+	###########
+	
+	def upload(self, album, cover, year=None, month=None, maximumDuration=600):
 
 		#Téléchargement
-		self.playlist.telecharger(album, cover, annee, mois, duree_max)
+		self.playlist.download(album, cover, year, month, maximumDuration)
 
 		#Création de la presentation	
 		self.presentation.create(album)
 
 		#Creation du nfo
-		if(nfo_package in os.popen("dpkg -l | grep " + nfo_package).read()):
+		if(nfoPackage in os.popen("dpkg -l | grep " + nfoPackage).read()):
 			self.nfo.create(album)
 		else:
-			log.erreur("Impossible de créer le fichier \"" + album + ".nfo\". Vous devez installer " + nfo_package)
+			error("Impossible de créer le fichier \"" + album + ".nfo\". Vous devez installer " + nfoPackage)
 
 		#Création du .torrent
-		if(torrent_package in os.popen("dpkg -l | grep " + torrent_package).read()):
+		if(torrentPackage in os.popen("dpkg -l | grep " + torrentPackage).read()):
 			self.torrent.create(album)
 		else:
-			log.erreur("Impossible de créer le fichier \"" + album + ".torrent\". Vous devez installer " + torrent_package)
+			error("Impossible de créer le fichier \"" + album + ".torrent\". Vous devez installer " + torrentPackage)
