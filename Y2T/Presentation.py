@@ -19,8 +19,8 @@ class Presentation:
 
 	bannerUrl = "https://www.pixenli.com/image/tSOeR53I"
 	seedUrl = "https://www.pixenli.com/image/8pFkx2gL"
-	author = "MRDOMOO"
-	signatureUrl = "https://www.pixenli.com/image/lJQnyjCh"
+	author = "___AUTHOR_NAME___"
+	signatureUrl = "___AUTHOR_SIGNATURE___"
 
 	############
 	# ATRIBUTS #
@@ -63,6 +63,7 @@ class Presentation:
 		if(os.path.exists(album)):
 			self.album = album
 			self.fileNumber = len(os.listdir(album))
+			self.files = ""
 			for music in os.listdir(album):
 				self.files += music + "\n"
 			self.weigth = subprocess.check_output(['du','-sh', album]).split()[0].decode('utf-8')

@@ -14,9 +14,9 @@ Y2T permet de :
 
 ## Prérequis
 
-Installation de pip :
+Installation de pip et git:
 ```
-$ sudo apt-get install python-pip
+$ sudo apt-get install python-pip git
 ```
 
 Y2T à besoin des paquets suivant :
@@ -42,6 +42,11 @@ $ sudo apt install mediainfo transmission-create transmission-gtk
 Vous pouvez installer Y2T directement depuis le dépôt git :
 ```
 $ sudo pip install git+https://github.com/Esisar-Pro-G/Y2T.git@master
+```
+
+**Mise à jour**
+```
+$ sudo pip install git+https://github.com/Esisar-Pro-G/Y2T.git@master -U
 ```
 
 ## Utilisation
