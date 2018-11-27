@@ -19,8 +19,8 @@ class Presentation:
 
 	bannerUrl = "https://www.pixenli.com/image/tSOeR53I"
 	seedUrl = "https://www.pixenli.com/image/8pFkx2gL"
-	author = "MRDOMOO"
-	signatureUrl = "https://www.pixenli.com/image/lJQnyjCh"
+	author = "___AUTHOR_NAME___"
+	signatureUrl = "___AUTHOR_SIGNATURE___"
 
 	############
 	# ATRIBUTS #
