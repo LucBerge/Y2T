@@ -4,7 +4,7 @@
 # IMPORTS #
 ###########
 
-from Log import *
+from __init__ import log
 import os, subprocess
 
 #########
@@ -71,10 +71,10 @@ class Presentation:
 			texte =  self.toString()
 
 			os.popen("echo \"" + texte + "\" > \"" + album + ".txt\"")
-			log("Création du fichier \"" + album + ".txt\"")
+			log.debug("Création du fichier \"" + album + ".txt\"")
 
 		else:
-			error("Impossible de créer le fichier \"" + album + ".txt\", le dossier \"" + album + "\" n'existe pas")
+			log.error("Impossible de créer le fichier \"" + album + ".txt\", le dossier \"" + album + "\" n'existe pas")
 	
 	def toString(self):
 		return ("[center][u][b][size=200]" + self.title + "[/size][/b][/u]\n"
