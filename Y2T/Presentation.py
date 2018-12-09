@@ -4,7 +4,7 @@
 # IMPORTS #
 ###########
 
-from Log import *
+from __init__ import log
 import os, subprocess
 
 #########
@@ -19,8 +19,8 @@ class Presentation:
 
 	bannerUrl = "https://www.pixenli.com/image/tSOeR53I"
 	seedUrl = "https://www.pixenli.com/image/8pFkx2gL"
-	author = "MRDOMOO"
-	signatureUrl = "https://www.pixenli.com/image/lJQnyjCh"
+	author = "___AUTHOR_NAME___"
+	signatureUrl = "___AUTHOR_SIGNATURE___"
 
 	############
 	# ATRIBUTS #
@@ -63,6 +63,7 @@ class Presentation:
 		if(os.path.exists(album)):
 			self.album = album
 			self.fileNumber = len(os.listdir(album))
+			self.files = ""
 			for music in os.listdir(album):
 				self.files += music + "\n"
 			self.weigth = subprocess.check_output(['du','-sh', album]).split()[0].decode('utf-8')
@@ -70,10 +71,10 @@ class Presentation:
 			texte =  self.toString()
 
 			os.popen("echo \"" + texte + "\" > \"" + album + ".txt\"")
-			log("Création du fichier \"" + album + ".txt\"")
+			log.debug("Création du fichier \"" + album + ".txt\"")
 
 		else:
-			error("Impossible de créer le fichier \"" + album + ".txt\", le dossier \"" + album + "\" n'existe pas")
+			log.error("Impossible de créer le fichier \"" + album + ".txt\", le dossier \"" + album + "\" n'existe pas")
 	
 	def toString(self):
 		return ("[center][u][b][size=200]" + self.title + "[/size][/b][/u]\n"

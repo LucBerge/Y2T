@@ -1,5 +1,74 @@
-sudo pip install beautifulsoup4
-sudo pip install youtube-dl
-sudo pip install mutagen
-sudo apt install mediainfo
-sudo apt install transmission
+# Y2T - Youtube to Torrents
+
+## Description
+
+Youtube to Torrent est un outil python fonctionnant sous Linux permettant de créer un ou plusieurs fichiers torrents à partir d'une playlist youtube.
+L'objectif est de simplifier la création des fichiers nécessaires au partage de contenu musical.
+
+Y2T permet de :
+- Analyser, filtrer et télécharger les vidéos d'une playlist au format mp3
+- Ajouter les tags mp3
+- Créer la présentation du torrent
+- Créer le fichier .nfo
+- Créer le fichier .torrent
+
+## Prérequis
+
+Installation de pip et git:
+```
+$ sudo apt-get install python-pip git
+```
+
+Y2T à besoin des paquets suivant :
+```
+$ sudo pip install beautifulsoup4 youtube-dl mutagen
+```
+
+**Optionnel**
+
+Les paquets suivant peuvent ne pas être installé. Dans ce cas là, les fichiers correspondant ne seront pas générés.
+
+- `mediainfo` permet de créer les fichiers .nfo
+- `transmission-create` permet de créer les fichiers .torrent
+- `transmission-gtk` permet d'ouvrir les fichiers .torrent
+
+Il est recommandé de les installer avec la commande suivante :
+```
+$ sudo apt install mediainfo transmission-create transmission-gtk
+```
+
+## Installation
+
+Vous pouvez installer Y2T directement depuis le dépôt git :
+```
+$ sudo pip install git+https://github.com/Esisar-Pro-G/Y2T.git@master
+```
+
+**Mise à jour**
+```
+$ sudo pip install git+https://github.com/Esisar-Pro-G/Y2T.git@master -U
+```
+
+## Utilisation
+
+Le code ci-dessous permet de générer facilement tous les fichier nécessaire à l'uploader la discographie de la chaine Ediv Music.
+Chaque album représente une année.
+```
+import Y2T
+Discographie = Y2T.Upload("https://www.youtube.com/channel/UCBVwKRYmERFiIbheXEATDqw/videos",
+		"Ediv Music",
+		"https://www.pixenli.com/image/dE2gZ6EV",
+		"Ediv Music try to bring you the best music out there, so they don’t have to search SoundCloud, YouTube and Spotify channels 24/7. We seperate the men from the boys and the rubbish from the diamonds. ",
+		"https://www.youtube.com/watch?v=bNppHOYIgRE",
+		"Every day should feel like valentinesday right? That's why this channel brings you all the new Tropical, Summer and Deep House every day.",
+		"mp3",
+		"___TRACKER___")
+	
+  Discographie.upload("Collection 2015", "Collection 2015.jpg",2015)
+  Discographie.upload("Collection 2016", "Collection 2016.jpg",2016)
+  Discographie.upload("Collection 2017", "Collection 2017.jpg",2017)
+```
+
+## Contribution
+
+Pour contribuer au projet, vous devez réaliser un fork du projet vers votre espace personnel. Vous pourrez alors faire un pull request en temps voulu. Merci de contacter @LucBerge pour plus d'informations sur les tâches à réaliser.
