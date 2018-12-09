@@ -5,16 +5,12 @@
 ###########
 
 from __future__ import unicode_literals
+import youtube_dl
 from Log import *
 from bs4 import BeautifulSoup
 import os, sys, glob, requests, fnmatch
+from __init__ import ydl_opts, log
 from mutagen.id3 import ID3, COMM, TALB, TCON, TDRC, TIT2, TPE1, TRCK, APIC
-
-#############
-# CONSTANTS #
-#############
-
-downloaded_file = "downloaded.txt"
 
 #########
 # CLASS #
@@ -46,10 +42,16 @@ class Video:
 	# CONSTRUCTOR #
 	###############
 
-	def __init__(self, url, artist):
-
-		self.url = url
+	def __init__(self, info, artist):
+		self.url = info['webpage_url']
 		self.artist = artist
+
+		self.title = info['title']
+		date = info["upload_date"]
+
+		self.year = int(date[0:4])
+		self.month = int(date[5:7])
+		self.duration = info["duration"]
 
 	##############
 	# DOWNLOADED #
@@ -72,55 +74,34 @@ class Video:
 	# METHODS #
 	###########
 
-	def getInformations(self):
-
-		if(not self.isDownloaded()):
-			req = requests.get(self.url)
-			soup = BeautifulSoup(req.text, "html.parser")
-
-			for i in soup.find_all('meta'):
-				meta = str(i).decode('utf-8')
-				if "itemprop" in meta:
-					if "name" in meta:
-						self.title = i["content"]
-					if "datePublished" in meta:
-						date=str(i["content"])
-						self.year = int(date[0:4])
-						self.month = int(date[5:7])
-					if "duration" in meta:
-						duration_str = i["content"]
-						T=duration_str.index('T')
-						M=duration_str.index('M')
-						self.duration = int(duration_str[T+1:M])*60 + int(duration_str[M+1:-1])
-
 	def download(self, album, cover):
 		
 		self.album = album
 		self.cover = cover
 
-		if(not self.isDownloaded()):
-			if(not os.path.isdir(self.album)):
-				os.mkdir(self.album, 0755)
+		if(not os.path.isdir(self.album)):
+			os.mkdir(self.album, 0755)
 
-			os.chdir(self.album)
-			Telechargment=os.popen("youtube-dl -x --audio-format mp3 --audio-quality 192 -o \"" + self.album + "\%(title)s.%(ext)s\" " + self.url).read()
-			os.chdir("..")
+		os.chdir(self.album)
+		ydl = youtube_dl.YoutubeDL(ydl_opts)
+		
+		try :
+			ydl.download([self.url])
+			self.setTags()
 
-			if "100%" in Telechargment:
-				self.setTags()
-				self.setDownoaded()
+		except youtube_dl.utils.DownloadError:
+			log.warning("Impossible de télécharger " + self.url)
 
-			else:
-				erreur("Impossible de télécharger " + self.url)
+		os.chdir("..")
 
 	def setTags(self):
-		musique = ID3(max(glob.glob(self.album + "/*"), key=os.path.getctime))
+		musique = ID3(max(glob.glob("*"), key=os.path.getctime))
 
 		musique.add(TPE1(encoding=3, text=unicode(self.artist)))
 		musique.add(TALB(encoding=3, text=unicode(self.album)))
 		musique.add(TIT2(encoding=3, text=unicode(self.title)))
 
-		self.trackNumber = len(fnmatch.filter(os.listdir(self.album), '*.mp3'))
+		self.trackNumber = len(fnmatch.filter(os.listdir("."), '*.mp3'))
 		musique.add(TRCK(encoding=3, text=unicode(self.trackNumber)))
 
 		if(self.year != None):
@@ -128,7 +109,7 @@ class Video:
 
 		musique.add(COMM(encoding=3, text=unicode(self.comment)))
 
-		image = open(self.cover,"rb").read()
+		image = open("../" + self.cover,"rb").read()
 		musique.add(APIC(3, 'image/png', 3, 'Front cover', image))
 				
 		musique.save(v2_version=3)
