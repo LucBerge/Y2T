@@ -4,9 +4,10 @@
 # IMPORTS #
 ###########
 
+from __future__ import unicode_literals
 from Video import *
-from Log import *
-import os, sys
+from __init__ import ydl_opts, log
+import os, sys, youtube_dl
 
 #############
 # PREREQUIS #
@@ -15,29 +16,17 @@ import os, sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-##############
-# CONSTANTES #
-##############
-
-downloaded_file = "downloaded.txt"
-
 ###########
 # CLASSES #
 ###########
 
 class Playlist:
 
-	#############
-	# CONSTANTS #
-	#############
-
-	youtubeUrl = "https://www.youtube.com/watch?v="
-
 	############
 	# ATRIBUTS #
 	############
 
-	url = None
+	info = None
 	artist =  None
 	format =  None
 	urls = []
@@ -48,49 +37,35 @@ class Playlist:
 	###############
 
 	def __init__(self, url, artist, format):
-		self.url = url
+		log.debug("Analyse de  la playlist en cours...veuillez patienter...")
+		self.info = self.getInformations(url)
 		self.artist = artist
 		self.format = format
-		self.urls = self.getUrls(self.url)
 
-		log(str(len(self.urls)) + " vidéos détectées")
-
-		for url in self.urls:
-			self.videos.append(Video(url, self.artist))
+		for videoInfo in self.info['entries']:
+			self.videos.append(Video(videoInfo, self.artist))
 		
-		self.getInformations()
 
-	def getUrls(self, url):
-		urls = []
-		RSS_videos=os.popen("youtube-dl -j --flat-playlist \"" + url + "\" | jq -r '.id'").read()
-		urls = RSS_videos.split("\n")
-		urls.pop(len(urls)-1)
-		return [self.youtubeUrl + url for url in urls]
+	def getInformations(self, url):
+		ydl = youtube_dl.YoutubeDL(ydl_opts)
+		return ydl.extract_info(url, download=False)
 
 	###########
 	# METHODS #
 	###########
 
-	def getInformations(self):
-
-		log("Analyse de " + str(len(self.videos)) + " vidéos en cours...veuillez patienter...\n")
-
-		for video in self.videos:
-			video.getInformations()
-			log(str(self.videos.index(video)+1) + "/" + str(len(self.videos)),True)
-
 	def download(self, album, cover, year=None, month=None, maximumDuration=600):
 		filteredVideos = self.filter(year, month, maximumDuration)
 
 		if(len(filteredVideos)!=0):
-			log(str(album) + " : Téléchargement de " + str(len(filteredVideos)) + " videos en cours...veuillez patienter...")
+			log.debug(str(album) + " : Téléchargement de " + str(len(filteredVideos)) + " videos en cours...veuillez patienter...")
 		
 			for video in filteredVideos :
-				log(str(filteredVideos.index(video)+1) + "/" + str(len(filteredVideos)) + " : " + str(video.url))
+				log.debug(str(filteredVideos.index(video)+1) + "/" + str(len(filteredVideos)) + " : " + str(video.url))
 				video.download(album, cover)
 
 		else:
-			log(str(album) + " : Aucune video à télécharger")
+			log.debug(str(album) + " : Aucune video à télécharger")
 
 	def filter(self, year, month, maximumDuration):
 		filteredVideos = []

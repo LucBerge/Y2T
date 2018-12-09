@@ -9,7 +9,7 @@ from Playlist import *
 from Presentation import *
 from Nfo import *
 from Torrent import *
-from Log import *
+from __init__ import ydl_opts, log
 
 
 #############
@@ -60,10 +60,10 @@ class Upload:
 		if(nfoPackage in os.popen("dpkg -l | grep " + nfoPackage).read()):
 			self.nfo.create(album)
 		else:
-			error("Impossible de créer le fichier \"" + album + ".nfo\". Vous devez installer " + nfoPackage)
+			log.warning("Impossible de créer le fichier \"" + album + ".nfo\". Vous devez installer " + nfoPackage)
 
 		#Création du .torrent
 		if(torrentPackage in os.popen("dpkg -l | grep " + torrentPackage).read()):
 			self.torrent.create(album)
 		else:
-			error("Impossible de créer le fichier \"" + album + ".torrent\". Vous devez installer " + torrentPackage)
+			log.warning("Impossible de créer le fichier \"" + album + ".torrent\". Vous devez installer " + torrentPackage)

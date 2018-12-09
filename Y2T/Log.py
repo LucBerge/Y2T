@@ -15,14 +15,15 @@ class bcolors:
 # DISPLAYS #
 ############
 
-def log(text, CR=False):
-	if(CR==True):
-		print(bcolors.CR + bcolors.OKGREEN + "LOG : " + bcolors.ENDC + text)
-	else:
-		print(bcolors.OKGREEN + "LOG : " + bcolors.ENDC + text)
+class Log(object):
+    def debug(self, msg, CR=False):
+        if(CR==True):
+            print(bcolors.CR + "[Y2T] " + msg)
+        else:
+            print("[Y2T] " + msg)
 
-def warning(text):
-	print(bcolors.WARNING + "WARNING : " + bcolors.ENDC + text)
+    def warning(self, msg):
+		print(bcolors.WARNING + "WARNING : " + bcolors.ENDC + msg)
 
-def error(text):
-	print(bcolors.FAIL + "ERROR : " + bcolors.ENDC + text)
+    def error(self, msg):
+		print(bcolors.FAIL + "ERROR : " + bcolors.ENDC + msg)

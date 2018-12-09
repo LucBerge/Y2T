@@ -5,7 +5,8 @@
 ###########
 
 from Log import *
-import Log, os
+from __init__ import log
+import os
 
 #########
 # CLASS #
@@ -28,6 +29,6 @@ class Nfo:
 
 		if(os.path.exists(album)):
 			os.popen("mediainfo \"" + album + "\" > \"" + album + ".nfo\"").read()
-			log("Création du fichier \"" + album + ".nfo\"")
+			log.debug("Création du fichier \"" + album + ".nfo\"")
 		else:
-			error("Impossible de créer le fichier \"" + album + ".nfo\", le dossier \"" + album + "\" n'existe pas")
+			log.error("Impossible de créer le fichier \"" + album + ".nfo\", le dossier \"" + album + "\" n'existe pas")
