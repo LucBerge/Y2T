@@ -49,6 +49,13 @@ $ sudo pip install git+https://github.com/Esisar-Pro-G/Y2T.git@master
 $ sudo pip install git+https://github.com/Esisar-Pro-G/Y2T.git@master -U
 ```
 
+## Désinstallation
+
+Pour désinstaller Y2T :
+```
+$ sudo pip uninstall Y2T
+```
+
 ## Utilisation
 
 Le code ci-dessous permet de générer facilement tous les fichier nécessaire à l'uploader la discographie de la chaine Ediv Music.
