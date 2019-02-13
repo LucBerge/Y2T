@@ -1,15 +1,18 @@
 #!/usr/bin/python
 
-from distutils.core import setup
+import setuptools
 
-setup(name='Y2T',
-      author='Esisar Pro-G',
-      description='Create torrents from youtube playlist',
-      author_email='esisar.pro.g@gmail.com',
-      url='https://github.com/Esisar-Pro-G/Y2T',
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(name='Y2T',
       version='1.2',
-      packages=['Y2T'],
-      download_url='https://github.com/Esisar-Pro-G/Y2T',
+      author='Esisar Pro-G',
+      author_email='esisar.pro.g@gmail.com',
+      long_description=long_description,
+      long_description_content_type="text/markdown",
+      url='https://github.com/Esisar-Pro-G/Y2T',
+      packages=setuptools.find_packages(),
       install_requires=['beautifulsoup4 ', 'youtube-dl', 'mutagen'],
       platforms='Linux',
      )
