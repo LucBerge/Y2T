@@ -14,14 +14,9 @@ Y2T permet de :
 
 ## Prérequis
 
-Installation de pip et git:
+Installation de pip :
 ```
-$ sudo apt-get install python-pip git
-```
-
-Y2T à besoin des paquets suivant :
-```
-$ sudo pip install beautifulsoup4 youtube-dl mutagen
+$ sudo apt-get install python-pip
 ```
 
 **Optionnel**
@@ -39,19 +34,26 @@ $ sudo apt install mediainfo transmission-create transmission-gtk
 
 ## Installation
 
-Vous pouvez installer Y2T directement depuis le dépôt git :
+Vous pouvez installer Y2T directement depuis le dépôt [PyPi](https://pypi.org/project/Y2T/) :
 ```
-$ sudo pip install git+https://github.com/Esisar-Pro-G/Y2T.git@master
+$ sudo pip install Y2T
 ```
 
 **Mise à jour**
 ```
-$ sudo pip install git+https://github.com/Esisar-Pro-G/Y2T.git@master -U
+$ sudo pip install Y2T -U
+```
+
+## Désinstallation
+
+Pour désinstaller Y2T :
+```
+$ sudo pip uninstall Y2T
 ```
 
 ## Utilisation
 
-Le code ci-dessous permet de générer facilement tous les fichier nécessaire à l'uploader la discographie de la chaine Ediv Music.
+Le code ci-dessous permet de générer tous les fichiers nécessaires pour uploader la discographie de [Ediv Music](https://www.youtube.com/c/edivmusic).
 Chaque album représente une année.
 ```
 import Y2T
@@ -69,6 +71,8 @@ Discographie = Y2T.Upload("https://www.youtube.com/channel/UCBVwKRYmERFiIbheXEAT
   Discographie.upload("Collection 2017", "Collection 2017.jpg",2017)
 ```
 
+Vous pouvez aussi consulter les [exemples](https://github.com/LucBerge/Y2T/tree/master/examples) fournis.
+
 ## Contribution
 
-Pour contribuer au projet, vous devez réaliser un fork du projet vers votre espace personnel. Vous pourrez alors faire un pull request en temps voulu. Merci de contacter @LucBerge pour plus d'informations sur les tâches à réaliser.
+Pour contribuer au projet, vous devez réaliser un fork du projet vers votre espace personnel. Vous pourrez alors faire un pull request en temps voulu. Merci de contacter [@LucBerge](https://github.com/LucBerge) pour plus d'informations sur les tâches à réaliser.
