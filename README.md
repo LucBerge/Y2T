@@ -1,3 +1,5 @@
+[![release](https://img.shields.io/badge/release-1.2-succes.svg)](https://pypi.org/project/Y2T/)
+
 # Y2T - Youtube to Torrents
 
 ## Description
@@ -16,7 +18,7 @@ Y2T permet de :
 
 Installation de pip :
 ```
-$ sudo apt-get install python-pip
+sudo apt-get install python-pip
 ```
 
 **Optionnel**
@@ -29,26 +31,26 @@ Les paquets suivant peuvent ne pas être installé. Dans ce cas là, les fichier
 
 Il est recommandé de les installer avec la commande suivante :
 ```
-$ sudo apt install mediainfo transmission-create transmission-gtk
+sudo apt install mediainfo transmission-create transmission-gtk
 ```
 
 ## Installation
 
 Vous pouvez installer Y2T directement depuis le dépôt [PyPi](https://pypi.org/project/Y2T/) :
 ```
-$ sudo pip install Y2T
+sudo pip install Y2T
 ```
 
 **Mise à jour**
 ```
-$ sudo pip install Y2T -U
+sudo pip install Y2T -U
 ```
 
 ## Désinstallation
 
 Pour désinstaller Y2T :
 ```
-$ sudo pip uninstall Y2T
+sudo pip uninstall Y2T
 ```
 
 ## Utilisation
