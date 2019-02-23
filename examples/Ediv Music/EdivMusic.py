@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # coding: utf8
 
-import sys
-sys.path.insert(0, '../../Y2T')
 import Y2T
 
 ########
@@ -22,6 +20,7 @@ def main():
 	Discographie.upload("Collection 2015", "Collection 2015.jpg",2015)
 	Discographie.upload("Collection 2016", "Collection 2016.jpg",2016)
 	Discographie.upload("Collection 2017", "Collection 2017.jpg",2017)
+	Discographie.upload("Collection 2018", "Collection 2018.jpg",2018)
 
 ##########
 # GLOBAL #
