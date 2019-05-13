@@ -69,6 +69,7 @@ Discographie = Y2T.Upload("https://www.youtube.com/channel/UCBVwKRYmERFiIbheXEAT
   Discographie.upload("Collection 2015", "Collection 2015.jpg",2015)
   Discographie.upload("Collection 2016", "Collection 2016.jpg",2016)
   Discographie.upload("Collection 2017", "Collection 2017.jpg",2017)
+  Discographie.upload("Collection 2018", "Collection 2018.jpg",2018)
 ```
 
 Vous pouvez aussi consulter les [exemples](https://github.com/LucBerge/Y2T/tree/master/examples) fournis.
