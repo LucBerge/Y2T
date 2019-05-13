@@ -16,9 +16,8 @@ Y2T permet de :
 
 ## Prérequis
 
-Installation de pip :
 ```
-sudo apt-get install python-pip
+sudo apt-get install python-pip ffmpeg
 ```
 
 **Optionnel**
