@@ -26,7 +26,6 @@ Les paquets suivant peuvent ne pas être installé. Dans ce cas là, les fichier
 
 - `mediainfo` permet de créer les fichiers .nfo
 - `transmission-cli` permet de créer les fichiers .torrent
-- `transmission-gtk` permet d'ouvrir les fichiers .torrent
 
 Il est recommandé de les installer avec la commande suivante :
 ```
