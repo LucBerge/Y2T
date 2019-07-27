@@ -35,9 +35,13 @@ class Torrent:
 			os.remove(album + ".torrent")
 
 		if(os.path.exists(album)):
-			os.popen("transmission-create -p -t \"" + self.tracker + "\" -o \"" + album + ".torrent\" \"" + album + "\"")
-			#os.popen("transmission-gtk \"" + album + ".torrent\" &")
-			logger.debug("Création du fichier \"" + album + ".torrent\"")
+			process = os.popen("transmission-create -p -t \"" + self.tracker + "\" -o \"" + album + ".torrent\" \"" + album + "\"")
+			result = process.read()
+			process.close()
+			if("bad announce URL" in result):
+				logger.error("Impossible de créer le fichier \"" + album + ".torrent\", merci de vérifier votre tracker")
+			else:
+				logger.debug("Création du fichier \"" + album + ".torrent\"")
 		else:
 			logger.error("Impossible de créer le fichier \"" + album + ".torrent\", le dossier \"" + album + "\" n'existe pas")
 

@@ -86,7 +86,9 @@ class Video:
 		
 		try :
 			ydl.download([self.url])
-			self.setTags()
+			if(ydl_opts['postprocessors'][0]['key'] == 'FFmpegExtractAudio'):
+				if(ydl_opts['postprocessors'][0]['preferredcodec'] == 'mp3'):
+					self.setTags()
 
 		except youtube_dl.utils.DownloadError:
 			logger.warning("Impossible de télécharger " + self.url)

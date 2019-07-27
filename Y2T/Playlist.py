@@ -27,7 +27,7 @@ class Playlist:
 	# ATRIBUTS #
 	############
 
-	info = None
+	url = None
 	artist =  None
 	videos = []
 
@@ -36,22 +36,27 @@ class Playlist:
 	###############
 
 	def __init__(self, url, artist):
-		logger.debug("Analyse de  la playlist en cours...veuillez patienter...")
-		self.info = self.getInformations(url)
+		self.url = url
 		self.artist = artist
-
-		for videoInfo in self.info['entries']:
-			self.videos.append(Video(videoInfo, self.artist))
-		
-	def getInformations(self, url):
-		ydl = youtube_dl.YoutubeDL(ydl_opts)
-		return ydl.extract_info(url, download=False)
 
 	###########
 	# METHODS #
 	###########
 
+	def getInformations(self):
+
+		logger.debug("Analyse de  la playlist en cours...veuillez patienter...")
+		ydl = youtube_dl.YoutubeDL(ydl_opts)
+		info = ydl.extract_info(self.url, download=False)
+
+		for videoInfo in info['entries']:
+			self.videos.append(Video(videoInfo, self.artist))
+
 	def download(self, album, cover, year=None, month=None, maximumDuration=600):
+
+		if(not len(self.videos)):
+			self.getInformations()
+
 		filteredVideos = self.filter(year, month, maximumDuration)
 
 		if(len(filteredVideos)!=0):
