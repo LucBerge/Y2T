@@ -16,9 +16,8 @@ Y2T permet de :
 
 ## Prérequis
 
-Installation de pip :
 ```
-sudo apt-get install python-pip
+sudo apt-get install python-pip ffmpeg
 ```
 
 **Optionnel**
@@ -26,12 +25,11 @@ sudo apt-get install python-pip
 Les paquets suivant peuvent ne pas être installé. Dans ce cas là, les fichiers correspondant ne seront pas générés.
 
 - `mediainfo` permet de créer les fichiers .nfo
-- `transmission-create` permet de créer les fichiers .torrent
-- `transmission-gtk` permet d'ouvrir les fichiers .torrent
+- `transmission-cli` permet de créer les fichiers .torrent
 
 Il est recommandé de les installer avec la commande suivante :
 ```
-sudo apt install mediainfo transmission-create transmission-gtk
+sudo apt install mediainfo transmission-cli transmission-gtk
 ```
 
 ## Installation
@@ -71,6 +69,7 @@ Discographie = Y2T.Upload("https://www.youtube.com/channel/UCBVwKRYmERFiIbheXEAT
   Discographie.upload("Collection 2015", "Collection 2015.jpg",2015)
   Discographie.upload("Collection 2016", "Collection 2016.jpg",2016)
   Discographie.upload("Collection 2017", "Collection 2017.jpg",2017)
+  Discographie.upload("Collection 2018", "Collection 2018.jpg",2018)
 ```
 
 Vous pouvez aussi consulter les [exemples](https://github.com/LucBerge/Y2T/tree/master/examples) fournis.
