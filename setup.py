@@ -8,7 +8,7 @@ long_description = open("README.md", "r").read()
 
 import setuptools
 setuptools.setup(name='Y2T',
-      version='1.2',
+      version='1.3',
       author='Esisar Pro-G',
       author_email='esisar.pro.g@gmail.com',
       long_description=long_description,
