@@ -15,6 +15,6 @@ setuptools.setup(name='Y2T',
       long_description_content_type="text/markdown",
       url='https://github.com/Esisar-Pro-G/Y2T',
       packages=setuptools.find_packages(),
-      install_requires=['beautifulsoup4 ', 'youtube-dl', 'mutagen', 'requests'],
+      install_requires=['youtube-dl', 'mutagen'],
       platforms='Linux',
      )
