@@ -4,7 +4,7 @@
 # IMPORTS #
 ###########
 
-from __init__ import log
+from Y2T.Log import logger
 import os, subprocess
 
 #########
@@ -71,10 +71,10 @@ class Presentation:
 			texte =  self.toString()
 
 			os.popen("echo \"" + texte + "\" > \"" + album + ".txt\"")
-			log.debug("Création du fichier \"" + album + ".txt\"")
+			logger.debug("Création du fichier \"" + album + ".txt\"")
 
 		else:
-			log.error("Impossible de créer le fichier \"" + album + ".txt\", le dossier \"" + album + "\" n'existe pas")
+			logger.error("Impossible de créer le fichier \"" + album + ".txt\", le dossier \"" + album + "\" n'existe pas")
 	
 	def toString(self):
 		return ("[center][u][b][size=200]" + self.title + "[/size][/b][/u]\n"

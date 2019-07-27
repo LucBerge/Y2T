@@ -5,16 +5,17 @@
 ###########
 
 from __future__ import unicode_literals
-from Video import *
-from __init__ import ydl_opts, log
+from Y2T.Video import *
+from Y2T.__init__ import ydl_opts
+from Y2T.Log import logger
 import os, sys, youtube_dl
 
 #############
 # PREREQUIS #
 #############
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 
 ###########
 # CLASSES #
@@ -28,24 +29,20 @@ class Playlist:
 
 	info = None
 	artist =  None
-	format =  None
-	urls = []
 	videos = []
 
 	###############
 	# CONSTRUCTOR #
 	###############
 
-	def __init__(self, url, artist, format):
-		log.debug("Analyse de  la playlist en cours...veuillez patienter...")
+	def __init__(self, url, artist):
+		logger.debug("Analyse de  la playlist en cours...veuillez patienter...")
 		self.info = self.getInformations(url)
 		self.artist = artist
-		self.format = format
 
 		for videoInfo in self.info['entries']:
 			self.videos.append(Video(videoInfo, self.artist))
 		
-
 	def getInformations(self, url):
 		ydl = youtube_dl.YoutubeDL(ydl_opts)
 		return ydl.extract_info(url, download=False)
@@ -58,14 +55,14 @@ class Playlist:
 		filteredVideos = self.filter(year, month, maximumDuration)
 
 		if(len(filteredVideos)!=0):
-			log.debug(str(album) + " : Téléchargement de " + str(len(filteredVideos)) + " videos en cours...veuillez patienter...")
+			logger.debug(str(album) + " : Téléchargement de " + str(len(filteredVideos)) + " videos en cours...veuillez patienter...")
 		
 			for video in filteredVideos :
-				log.debug(str(filteredVideos.index(video)+1) + "/" + str(len(filteredVideos)) + " : " + str(video.url))
+				logger.debug(str(filteredVideos.index(video)+1) + "/" + str(len(filteredVideos)) + " : " + str(video.url))
 				video.download(album, cover)
 
 		else:
-			log.debug(str(album) + " : Aucune video à télécharger")
+			logger.debug(str(album) + " : Aucune video à télécharger")
 
 	def filter(self, year, month, maximumDuration):
 		filteredVideos = []

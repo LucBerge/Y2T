@@ -4,7 +4,7 @@
 # IMPORTS #
 ###########
 
-from __init__ import log
+from Y2T.Log import logger
 import os
 
 #########
@@ -37,9 +37,9 @@ class Torrent:
 		if(os.path.exists(album)):
 			os.popen("transmission-create -p -t \"" + self.tracker + "\" -o \"" + album + ".torrent\" \"" + album + "\"")
 			#os.popen("transmission-gtk \"" + album + ".torrent\" &")
-			log.debug("Création du fichier \"" + album + ".torrent\"")
+			logger.debug("Création du fichier \"" + album + ".torrent\"")
 		else:
-			log.error("Impossible de créer le fichier \"" + album + ".torrent\", le dossier \"" + album + "\" n'existe pas")
+			logger.error("Impossible de créer le fichier \"" + album + ".torrent\", le dossier \"" + album + "\" n'existe pas")
 
 
 			

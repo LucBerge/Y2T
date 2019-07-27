@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-from Y2T import *
-from Log import *
-
-log = Log()
+from Y2T.Y2T import *
 
 ydl_opts = {
 	'outtmpl' : '%(title)s.%(ext)s',

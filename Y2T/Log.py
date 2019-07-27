@@ -23,7 +23,9 @@ class Log(object):
             print("[Y2T] " + msg)
 
     def warning(self, msg):
-		print(bcolors.WARNING + "WARNING : " + bcolors.ENDC + msg)
+        print(bcolors.WARNING + "WARNING : " + bcolors.ENDC + msg)
 
     def error(self, msg):
-		print(bcolors.FAIL + "ERROR : " + bcolors.ENDC + msg)
+        print(bcolors.FAIL + "ERROR : " + bcolors.ENDC + msg)
+
+logger = Log()

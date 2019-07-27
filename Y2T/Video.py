@@ -6,10 +6,9 @@
 
 from __future__ import unicode_literals
 import youtube_dl
-from Log import *
-from bs4 import BeautifulSoup
-import os, sys, glob, requests, fnmatch
-from __init__ import ydl_opts, log
+import os, glob, fnmatch
+from Y2T.__init__ import ydl_opts
+from Y2T.Log import logger
 from mutagen.id3 import ID3, COMM, TALB, TCON, TDRC, TIT2, TPE1, TRCK, APIC
 
 #########
@@ -80,7 +79,7 @@ class Video:
 		self.cover = cover
 
 		if(not os.path.isdir(self.album)):
-			os.mkdir(self.album, 0755)
+			os.mkdir(self.album, 755)
 
 		os.chdir(self.album)
 		ydl = youtube_dl.YoutubeDL(ydl_opts)
@@ -90,24 +89,24 @@ class Video:
 			self.setTags()
 
 		except youtube_dl.utils.DownloadError:
-			log.warning("Impossible de télécharger " + self.url)
+			logger.warning("Impossible de télécharger " + self.url)
 
 		os.chdir("..")
 
 	def setTags(self):
 		musique = ID3(max(glob.glob("*"), key=os.path.getctime))
 
-		musique.add(TPE1(encoding=3, text=unicode(self.artist)))
-		musique.add(TALB(encoding=3, text=unicode(self.album)))
-		musique.add(TIT2(encoding=3, text=unicode(self.title)))
+		musique.add(TPE1(encoding=3, text=str(self.artist)))
+		musique.add(TALB(encoding=3, text=str(self.album)))
+		musique.add(TIT2(encoding=3, text=str(self.title)))
 
 		self.trackNumber = len(fnmatch.filter(os.listdir("."), '*.mp3'))
-		musique.add(TRCK(encoding=3, text=unicode(self.trackNumber)))
+		musique.add(TRCK(encoding=3, text=str(self.trackNumber)))
 
 		if(self.year != None):
-			musique.add(TDRC(encoding=3, text=unicode(self.year)))
+			musique.add(TDRC(encoding=3, text=str(self.year)))
 
-		musique.add(COMM(encoding=3, text=unicode(self.comment)))
+		musique.add(COMM(encoding=3, text=str(self.comment)))
 
 		image = open("../" + self.cover,"rb").read()
 		musique.add(APIC(3, 'image/png', 3, 'Front cover', image))

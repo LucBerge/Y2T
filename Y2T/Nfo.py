@@ -4,8 +4,7 @@
 # IMPORTS #
 ###########
 
-from Log import *
-from __init__ import log
+from Y2T.Log import logger
 import os
 
 #########
@@ -29,6 +28,6 @@ class Nfo:
 
 		if(os.path.exists(album)):
 			os.popen("mediainfo \"" + album + "\" > \"" + album + ".nfo\"").read()
-			log.debug("Création du fichier \"" + album + ".nfo\"")
+			logger.debug("Création du fichier \"" + album + ".nfo\"")
 		else:
-			log.error("Impossible de créer le fichier \"" + album + ".nfo\", le dossier \"" + album + "\" n'existe pas")
+			logger.error("Impossible de créer le fichier \"" + album + ".nfo\", le dossier \"" + album + "\" n'existe pas")

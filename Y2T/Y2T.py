@@ -5,11 +5,11 @@
 ###########
 
 import os
-from Playlist import *
-from Presentation import *
-from Nfo import *
-from Torrent import *
-from __init__ import ydl_opts, log
+from Y2T.Playlist import *
+from Y2T.Presentation import *
+from Y2T.Nfo import *
+from Y2T.Torrent import *
+from Y2T.Log import logger
 
 
 #############
@@ -39,7 +39,7 @@ class Upload:
 	###############
 
 	def __init__(self, playlistUrl, artist, coverUrl, description, videoUrl, videoDescription, format, tracker):
-		self.playlist = Playlist(playlistUrl, artist, format)
+		self.playlist = Playlist(playlistUrl, artist)
 		self.presentation = Presentation(artist, coverUrl, description, videoUrl, videoDescription, artist, format)
 		self.nfo = Nfo()
 		self.torrent = Torrent(tracker)
@@ -60,10 +60,10 @@ class Upload:
 		if(nfoPackage in os.popen("dpkg -l | grep " + nfoPackage).read()):
 			self.nfo.create(album)
 		else:
-			log.warning("Impossible de créer le fichier \"" + album + ".nfo\". Vous devez installer " + nfoPackage)
+			logger.warning("Impossible de créer le fichier \"" + album + ".nfo\". Vous devez installer " + nfoPackage)
 
 		#Création du .torrent
 		if(torrentPackage in os.popen("dpkg -l | grep " + torrentPackage).read()):
 			self.torrent.create(album)
 		else:
-			log.warning("Impossible de créer le fichier \"" + album + ".torrent\". Vous devez installer " + torrentPackage)
+			logger.warning("Impossible de créer le fichier \"" + album + ".torrent\". Vous devez installer " + torrentPackage)

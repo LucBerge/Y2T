@@ -1,9 +1,12 @@
 #!/usr/bin/python
 
-import setuptools
+import sys
+if sys.version_info < (3, 5):
+    sys.exit('Y2T requires Python 3.5+')
 
 long_description = open("README.md", "r").read()
 
+import setuptools
 setuptools.setup(name='Y2T',
       version='1.2',
       author='Esisar Pro-G',
