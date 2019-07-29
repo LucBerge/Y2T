@@ -80,7 +80,7 @@ Discographie = Y2T.Upload("https://www.youtube.com/channel/UCBVwKRYmERFiIbheXEAT
 		"Ediv Music try to bring you the best music out there, so they don't have to search SoundCloud, YouTube and Spotify channels 24/7. We seperate the men from the boys and the rubbish from the diamonds. ",
 		"___TRACKER___")
 
-Discographie.addVideo("https://www.youtube.com/watch?v=bNppHOYIgRE", "Every day should feel like valentinesday right? That's why this channel brings you all the new Tropical, Summer and Deep House every day.")
+Discographie.presentation.addVideo("https://www.youtube.com/watch?v=bNppHOYIgRE", "Every day should feel like valentinesday right? That's why this channel brings you all the new Tropical, Summer and Deep House every day.")
 	
 Discographie.upload("Collection 2015", "Collection 2015.jpg",2015)
 Discographie.upload("Collection 2016", "Collection 2016.jpg",2016)
