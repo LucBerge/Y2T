@@ -5,9 +5,9 @@
 ###########
 
 from __future__ import unicode_literals
-import youtube_dl
-import os, glob, fnmatch
+import youtube_dl, os, glob, fnmatch
 from Y2T.__init__ import ydl_opts
+from Y2T.Utils import *
 from Y2T.Log import logger
 from mutagen.id3 import ID3, COMM, TALB, TCON, TDRC, TIT2, TPE1, TRCK, APIC
 
@@ -30,12 +30,15 @@ class Video:
 	url = None
 	artist =  None
 	title = None
-	album = None
 	year = None
 	month = None
 	duration = None
-	trackNumber = None
+
+	album = None
 	cover = None
+	track = None
+	weight = None
+	downloaded = None
 
 	###############
 	# CONSTRUCTOR #
@@ -46,10 +49,10 @@ class Video:
 		self.artist = artist
 
 		self.title = info['title']
-		date = info["upload_date"]
 
-		self.year = int(date[0:4])
-		self.month = int(date[5:7])
+		self.year = int(info["upload_date"][0:4])
+		self.month = int(info["upload_date"][4:6])
+		self.day = int(info["upload_date"][6:8])
 		self.duration = info["duration"]
 
 	##############
@@ -74,7 +77,6 @@ class Video:
 	###########
 
 	def download(self, album, cover):
-		
 		self.album = album
 		self.cover = cover
 
@@ -86,14 +88,20 @@ class Video:
 		
 		try :
 			ydl.download([self.url])
+			self.track = len(fnmatch.filter(os.listdir("."), '*'))
+			self.weight = os.path.getsize(max(glob.glob("*"), key=os.path.getctime))
+			self.downloaded = True
+
 			if(ydl_opts['postprocessors'][0]['key'] == 'FFmpegExtractAudio'):
 				if(ydl_opts['postprocessors'][0]['preferredcodec'] == 'mp3'):
 					self.setTags()
 
 		except youtube_dl.utils.DownloadError:
+			self.downloaded = False
 			logger.warning("Impossible de télécharger " + self.url)
 
 		os.chdir("..")
+		return self.downloaded
 
 	def setTags(self):
 		musique = ID3(max(glob.glob("*"), key=os.path.getctime))
@@ -102,8 +110,7 @@ class Video:
 		musique.add(TALB(encoding=3, text=str(self.album)))
 		musique.add(TIT2(encoding=3, text=str(self.title)))
 
-		self.trackNumber = len(fnmatch.filter(os.listdir("."), '*.mp3'))
-		musique.add(TRCK(encoding=3, text=str(self.trackNumber)))
+		musique.add(TRCK(encoding=3, text=str(self.track)))
 
 		if(self.year != None):
 			musique.add(TDRC(encoding=3, text=str(self.year)))
@@ -114,3 +121,6 @@ class Video:
 		musique.add(APIC(3, 'image/png', 3, 'Front cover', image))
 				
 		musique.save(v2_version=3)
+
+	def __str__(self):
+		return str(self.track) + " : " + self.title + " [" + secondsToHHMMSS(self.duration) + "]"
