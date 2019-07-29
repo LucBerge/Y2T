@@ -26,7 +26,7 @@ class Nfo:
 	############
 
 	artist = None
-	mediainfo = False
+	mediainfo = None
 
 	###############
 	# CONSTRUCTOR #
@@ -34,6 +34,19 @@ class Nfo:
 
 	def __init__(self, artist):
 		self.artist = artist
+		self._mediainfo = False
+
+	####################
+	# GETTER & SETTERS #
+	####################
+
+	@property
+	def mediainfo(self):
+		return self._mediainfo
+
+	@mediainfo.setter
+	def mediainfo(self, mediainfo):
+		self._mediainfo = mediainfo
 
 	###########
 	# METHODS #

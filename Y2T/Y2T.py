@@ -32,10 +32,30 @@ class Upload:
 	###############
 
 	def __init__(self, playlistUrl, artist, coverUrl, description, tracker):
-		self.playlist = Playlist(playlistUrl, artist)
-		self.presentation = Presentation(artist, coverUrl, description)
-		self.nfo = Nfo(artist)
-		self.torrent = Torrent(tracker)
+		self._playlist = Playlist(playlistUrl, artist)
+		self._presentation = Presentation(artist, coverUrl, description)
+		self._nfo = Nfo(artist)
+		self._torrent = Torrent(tracker)
+
+	###########
+	# GETTERS #
+	###########
+
+	@property
+	def playlist(self):
+		return self._playlist
+
+	@property
+	def presentation(self):
+		return self._presentation
+		
+	@property
+	def nfo(self):
+		return self._nfo
+		
+	@property
+	def torrent(self):
+		return self._torrent
 
 	#################
 	# PARAM METHODS #
