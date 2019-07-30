@@ -91,4 +91,4 @@ class Nfo:
 		
 		text += "\n\nNombre de fichiers : " + str(len(collection.files)) + "\nTemps de lecture totale : " + secondsToHHMMSS(collection.duration) + "\nTaille totale : " + str(bytesToMeagebytes(collection.weight)) + " Mo\n\n========== Liste des fichiers ==========\n" + str(collection)
 
-		return text + "\n\n========== Créé avec Y2T =========="
+		return text + "\n========== Créé avec Y2T =========="
