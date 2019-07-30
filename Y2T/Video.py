@@ -81,7 +81,7 @@ class Video:
 		self.cover = cover
 
 		if(not os.path.isdir(self.album)):
-			os.mkdir(self.album, 755)
+			os.mkdir(self.album)
 
 		os.chdir(self.album)
 		ydl = youtube_dl.YoutubeDL(ydl_opts)
