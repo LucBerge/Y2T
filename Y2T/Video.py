@@ -55,23 +55,6 @@ class Video:
 		self.day = int(info["upload_date"][6:8])
 		self.duration = info["duration"]
 
-	##############
-	# DOWNLOADED #
-	##############
-
-	def isDownloaded(self):
-		out = False
-		if(os.path.exists(downloaded_file)):
-			file = open(downloaded_file,"r+")
-			out = (self.url in file.read())
-			file.close()
-		return out
-
-	def setDownoaded(self):
-		file = open(downloaded_file,"a")
-		file.write(self.url+"\n") 
-		file.close()
-
 	###########
 	# METHODS #
 	###########
