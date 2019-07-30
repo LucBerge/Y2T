@@ -1,15 +1,20 @@
-#!/usr/bin/python
+import sys
+if sys.version_info < (3, 5):
+    sys.exit('Y2T requires Python 3.5+')
 
-from distutils.core import setup
+long_description = open("README.md", "r").read()
 
-setup(name='Y2T',
-      author='Esisar Pro-G',
-      description='Create torrents from youtube playlist',
-      author_email='esisar.pro.g@gmail.com',
-      url='https://github.com/Esisar-Pro-G/Y2T',
-      version='1.2',
-      packages=['Y2T'],
-      download_url='https://github.com/Esisar-Pro-G/Y2T',
-      install_requires=['beautifulsoup4 ', 'youtube-dl', 'mutagen'],
-      platforms='Linux',
-     )
+import setuptools
+setuptools.setup(
+	name='Y2T',
+	version='1.4',
+	author='Esisar Pro-G',
+	author_email='esisar.pro.g@gmail.com',
+	description="Youtube to Torrent",
+	long_description=long_description,
+	long_description_content_type="text/markdown",
+	url='https://github.com/Esisar-Pro-G/Y2T',
+	packages=setuptools.find_packages(),
+	install_requires=['youtube-dl', 'mutagen'],
+	platforms='Linux'
+)

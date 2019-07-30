@@ -1,11 +1,7 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+# coding: utf8
 
 from __future__ import unicode_literals
-from Y2T import *
-from Log import *
-
-log = Log()
+from Y2T.Y2T import *
 
 ydl_opts = {
 	'outtmpl' : '%(title)s.%(ext)s',
@@ -15,5 +11,5 @@ ydl_opts = {
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
         'preferredquality': '192',
-    }],
+    }]
 }
