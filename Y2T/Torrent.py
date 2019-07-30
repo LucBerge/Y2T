@@ -4,14 +4,20 @@
 # IMPORTS #
 ###########
 
-from __init__ import log
 import os
+from Y2T.Log import logger
 
 #########
 # CLASS #
 #########
 
 class Torrent:
+
+	#############
+	# CONSTANTS #
+	#############
+
+	torrentPackage = "transmission-cli"
 
 	############
 	# ATRIBUTS #
@@ -31,15 +37,20 @@ class Torrent:
 	###########
 
 	def create(self, album):
+
+		if(not os.path.exists(album)):
+			raise Exception("Impossible de créer le fichier \"" + album + ".torrent\", le dossier \"" + album + "\" n'existe pas")
+
 		if(os.path.exists(album + ".torrent")):
 			os.remove(album + ".torrent")
 
-		if(os.path.exists(album)):
-			os.popen("transmission-create -p -t \"" + self.tracker + "\" -o \"" + album + ".torrent\" \"" + album + "\"")
-			#os.popen("transmission-gtk \"" + album + ".torrent\" &")
-			log.debug("Création du fichier \"" + album + ".torrent\"")
-		else:
-			log.error("Impossible de créer le fichier \"" + album + ".torrent\", le dossier \"" + album + "\" n'existe pas")
+		process = os.popen("transmission-create -p -t \"" + self.tracker + "\" -o \"" + album + ".torrent\" \"" + album + "\"")
+		result = process.read()
+		process.close()
+		if("bad announce URL" in result):
+			raise Exception("Impossible de créer le fichier \"" + album + ".torrent\", merci de vérifier votre tracker")
+		
+		logger.debug("Création du fichier \"" + album + ".torrent\"")
 
 
 			
