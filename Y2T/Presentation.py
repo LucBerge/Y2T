@@ -21,21 +21,6 @@ class Presentation:
 
 	bannerUrl = "https://www.pixenli.com/image/tSOeR53I"
 	seedUrl = "https://www.pixenli.com/image/8pFkx2gL"
-
-	############
-	# ATRIBUTS #
-	############
-
-	artist = None
-	coverUrl = None
-	description = None
-	album = None
-
-	videoUrl = None
-	videoDescription = None
-	
-	author = None
-	signatureUrl = None
 	
 	###############
 	# CONSTRUCTOR #
@@ -45,6 +30,12 @@ class Presentation:
 		self.artist = artist
 		self.coverUrl = coverUrl
 		self.description = description
+
+		self.videoUrl = None
+		self.videoDescription = None
+		
+		self.author = None
+		self.signatureUrl = None
 
 	##########
 	# PARAMS #

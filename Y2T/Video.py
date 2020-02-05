@@ -23,23 +23,6 @@ class Video:
 
 	comment = "Create with Y2T. See https://github.com/Esisar-Pro-G/Y2T"
 
-	############
-	# ATRIBUTS #
-	############
-
-	url = None
-	artist =  None
-	title = None
-	year = None
-	month = None
-	duration = None
-
-	album = None
-	cover = None
-	track = None
-	weight = None
-	downloaded = None
-
 	###############
 	# CONSTRUCTOR #
 	###############
@@ -54,6 +37,12 @@ class Video:
 		self.month = int(info["upload_date"][4:6])
 		self.day = int(info["upload_date"][6:8])
 		self.duration = info["duration"]
+
+		self.album = None
+		self.cover = None
+		self.track = None
+		self.weight = None
+		self.downloaded = None
 
 	###########
 	# METHODS #

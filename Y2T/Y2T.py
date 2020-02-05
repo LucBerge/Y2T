@@ -18,15 +18,6 @@ from Y2T.Log import logger
 
 class Upload:
 
-	############
-	# ATRIBUTS #
-	############
-
-	playlist = None
-	presentation = None
-	nfo = None
-	torrent = None
-
 	###############
 	# CONSTRUCTOR #
 	###############

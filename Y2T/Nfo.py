@@ -21,13 +21,6 @@ class Nfo:
 
 	nfoPackage = "mediainfo"
 
-	############
-	# ATRIBUTS #
-	############
-
-	artist = None
-	mediainfo = None
-
 	###############
 	# CONSTRUCTOR #
 	###############

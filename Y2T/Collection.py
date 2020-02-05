@@ -6,22 +6,15 @@
 
 class Collection:
 
-	############
-	# ATRIBUTS #
-	############
-
-	artist = None
-
-	duration = 0
-	weight = 0
-	files = []
-
 	###############
 	# CONSTRUCTOR #
 	###############
 
 	def __init__(self, artist):
-		self.artiste = artist
+		self.artist = artist
+		self.duration = 0
+		self.weight = 0
+		self.files = []
 
 	###########
 	# METHODS #

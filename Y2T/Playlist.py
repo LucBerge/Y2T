@@ -17,14 +17,6 @@ from Y2T.Log import logger
 
 class Playlist:
 
-	############
-	# ATRIBUTS #
-	############
-
-	url = None
-	artist =  None
-	videos = []
-
 	###############
 	# CONSTRUCTOR #
 	###############
@@ -32,6 +24,7 @@ class Playlist:
 	def __init__(self, url, artist):
 		self.url = url
 		self.artist = artist
+		self.videos = []
 
 	###########
 	# METHODS #
@@ -44,7 +37,8 @@ class Playlist:
 		info = ydl.extract_info(self.url, download=False)
 
 		for videoInfo in info['entries']:
-			self.videos.append(Video(videoInfo, self.artist))
+			if(videoInfo):
+				self.videos.append(Video(videoInfo, self.artist))
 
 	def download(self, album, cover, year, month, maximumDuration):
 
