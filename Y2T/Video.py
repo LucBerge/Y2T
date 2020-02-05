@@ -23,23 +23,6 @@ class Video:
 
 	comment = "Create with Y2T. See https://github.com/Esisar-Pro-G/Y2T"
 
-	############
-	# ATRIBUTS #
-	############
-
-	url = None
-	artist =  None
-	title = None
-	year = None
-	month = None
-	duration = None
-
-	album = None
-	cover = None
-	track = None
-	weight = None
-	downloaded = None
-
 	###############
 	# CONSTRUCTOR #
 	###############
@@ -55,22 +38,11 @@ class Video:
 		self.day = int(info["upload_date"][6:8])
 		self.duration = info["duration"]
 
-	##############
-	# DOWNLOADED #
-	##############
-
-	def isDownloaded(self):
-		out = False
-		if(os.path.exists(downloaded_file)):
-			file = open(downloaded_file,"r+")
-			out = (self.url in file.read())
-			file.close()
-		return out
-
-	def setDownoaded(self):
-		file = open(downloaded_file,"a")
-		file.write(self.url+"\n") 
-		file.close()
+		self.album = None
+		self.cover = None
+		self.track = None
+		self.weight = None
+		self.downloaded = None
 
 	###########
 	# METHODS #
@@ -81,7 +53,7 @@ class Video:
 		self.cover = cover
 
 		if(not os.path.isdir(self.album)):
-			os.mkdir(self.album, 755)
+			os.mkdir(self.album)
 
 		os.chdir(self.album)
 		ydl = youtube_dl.YoutubeDL(ydl_opts)

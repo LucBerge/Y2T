@@ -21,21 +21,6 @@ class Presentation:
 
 	bannerUrl = "https://www.pixenli.com/image/tSOeR53I"
 	seedUrl = "https://www.pixenli.com/image/8pFkx2gL"
-
-	############
-	# ATRIBUTS #
-	############
-
-	artist = None
-	coverUrl = None
-	description = None
-	album = None
-
-	videoUrl = None
-	videoDescription = None
-	
-	author = None
-	signatureUrl = None
 	
 	###############
 	# CONSTRUCTOR #
@@ -45,6 +30,12 @@ class Presentation:
 		self.artist = artist
 		self.coverUrl = coverUrl
 		self.description = description
+
+		self.videoUrl = None
+		self.videoDescription = None
+		
+		self.author = None
+		self.signatureUrl = None
 
 	##########
 	# PARAMS #
@@ -91,7 +82,7 @@ class Presentation:
 		else:
 			text += "\n[b]Format[/b] : " + ydl_opts['postprocessors'][0]['preferedformat']
 		
-		text += "\n\n[b]Nombre de fichiers[/b] : " + str(len(collection.files)) + "\n[b]Temps de lecture totale[/b] : " + secondsToHHMMSS(collection.duration) + "\n[b]Taille totale[/b] : " + str(bytesToMeagebytes(collection.weight)) + " Mo\n\n[b]Liste des fichiers[/b] :\n" + str(collection) + "\n[img]" + self.seedUrl + "[/img]"
+		text += "\n\n[b]Nombre de fichiers[/b] : " + str(len(collection.files)) + "\n[b]Temps de lecture totale[/b] : " + secondsToHHMMSS(collection.duration) + "\n[b]Taille totale[/b] : " + str(bytesToMeagebytes(collection.weight)) + " Mo\n\n[b]Liste des fichiers[/b] :\n\n" + str(collection) + "\n[img]" + self.seedUrl + "[/img]"
 
 		if(self.author and self.signatureUrl):
 			text += "\n\n[b]UPLOAD PAR [color=crimson]" + self.author + "[/color][/b]\n\n[img]" + self.signatureUrl + "[/img]"

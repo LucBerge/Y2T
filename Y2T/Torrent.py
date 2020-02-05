@@ -19,12 +19,6 @@ class Torrent:
 
 	torrentPackage = "transmission-cli"
 
-	############
-	# ATRIBUTS #
-	############
-
-	tracker = None
-
 	###############
 	# CONSTRUCTOR #
 	###############

@@ -7,6 +7,7 @@ ydl_opts = {
 	'outtmpl' : '%(title)s.%(ext)s',
     'format': 'bestaudio/best',
     'download_archive': '../downloaded.txt',
+    'ignoreerrors': True,
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',

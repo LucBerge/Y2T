@@ -1,4 +1,4 @@
-[![release](https://img.shields.io/badge/release-1.4-succes.svg)](https://pypi.org/project/Y2T/)
+[![release](https://img.shields.io/badge/release-1.5-succes.svg)](https://pypi.org/project/Y2T/)
 
 # Y2T - Youtube to Torrents
 
